@@ -1,9 +1,15 @@
 package com.sarita.onlinequiz.entities;
 
+import java.util.List;
+
+import com.sarita.onlinequiz.dto.TestDTO;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Entity
@@ -19,4 +25,16 @@ public class Test {
     private String description;
 
     private Long time;
+
+    @OneToMany(mappedBy = "test", cascade = CascadeType.ALL)
+    private List<Question> questions;
+
+    public TestDTO getDto(){
+        TestDTO testDTO = new TestDTO();
+        testDTO.setId(id);
+        testDTO.setTitle(title);
+        testDTO.setDescription(description);
+        testDTO.setTime(time);
+        return testDTO;
+    }
 }
